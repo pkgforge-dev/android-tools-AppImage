@@ -36,7 +36,7 @@ HARD_LINKS=1 ./lib4bin ./shared/bin/* && rm -f ./lib4bin || exit 1
 
 # AppRun
 cat >> ./AppRun << 'EOF'
-#!/bin/sh
+#!/usr/bin/env sh
 CURRENTDIR="$(dirname "$(readlink -f "$0")")"
 UDEVNOTICE='No android udev rules detected, use "--getudev" to install'
 UDEVREPO="https://github.com/M0Rf30/android-udev-rules.git"

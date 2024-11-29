@@ -25,7 +25,7 @@ jobs:
         mv *AppImage dist/
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Android-Tools.AppImage
         path: 'dist'

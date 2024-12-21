@@ -134,6 +134,7 @@ fi
 EOF
 chmod a+x ./AppRun
 export VERSION="$(awk -F"=" '/vision/ {print $2}' ./shared/bin/source.properties)"
+echo "$VERSION" > ~/version
 
 # Do the thing!
 cd .. && wget -q "$APPIMAGETOOL" -O appimagetool && chmod +x ./appimagetool

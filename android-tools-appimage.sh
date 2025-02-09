@@ -4,7 +4,7 @@ export ARCH=x86_64
 APP=android-tools-appimage
 APPDIR="$APP".AppDir
 SITE="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
-ICON="https://developer.android.com/static/images/brand/Android_Robot.png"
+ICON="https://github.com/pkgforge-dev/android-tools-AppImage/blob/main/Android.png?raw=true"
 APPIMAGETOOL="https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
 SHARUN="https://bin.ajam.dev/$(uname -m)/sharun"
 LIB4BIN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"

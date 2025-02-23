@@ -1,22 +1,24 @@
 #!/bin/sh
 
-export ARCH=x86_64
+set -eu
+
+export ARCH="$(uname -m)"
 APP=android-tools-appimage
-APPDIR="$APP".AppDir
 SITE="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
 ICON="https://github.com/pkgforge-dev/android-tools-AppImage/blob/main/Android.png?raw=true"
 APPIMAGETOOL="https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
-SHARUN="https://github.com/VHSgunzo/sharun/releases/latest/download/sharun-$(uname -m)"
 LIB4BIN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 
 # CREATE DIRECTORIES AND DOWNLOAD THE ARCHIVE
-[ -n "$APP" ] || exit 1
-mkdir -p ./"$APP"/"$APPDIR"/shared && cd ./"$APP"/"$APPDIR" || exit 1
-wget "$SITE" && unzip -q *.zip && rm -f ./*.zip || exit 1
-mv ./platform-tools ./shared/bin || exit 1
+mkdir -p ./AppDir/shared
+cd ./AppDir
+wget "$SITE"
+unzip -q *.zip
+rm -f ./*.zip
+mv -v ./platform-tools ./shared/bin
 
 # DESKTOP & ICON
-cat >> ./Android-$APP.desktop << 'EOF'
+cat >> ./android-tools.desktop << 'EOF'
 [Desktop Entry]
 Name=Android-platform-tools
 Type=Application
@@ -25,14 +27,14 @@ Exec="sh -ic ' android-tools "";"" \\$SHELL'"
 Categories=Utility;
 Terminal=true
 EOF
-wget "$ICON" -O ./Android.png && ln -s ./Android.png ./.DirIcon
+wget "$ICON" -O ./Android.png
+ln -s ./Android.png ./.DirIcon
 
 # BUNDLE ALL DEPENDENCIES
-wget "$SHARUN" -O ./sharun || exit 1
-wget "$LIB4BIN" -O ./lib4bin || exit 1
-chmod +x ./sharun ./lib4bin
+wget "$LIB4BIN" -O ./lib4bin
+chmod +x ./lib4bin
 
-HARD_LINKS=1 ./lib4bin ./shared/bin/* && rm -f ./lib4bin || exit 1
+./lib4bin -p -v -s -k ./shared/bin/*
 
 # AppRun
 cat >> ./AppRun << 'EOF'
@@ -137,8 +139,9 @@ export VERSION="$(awk -F"=" '/vision/ {print $2}' ./shared/bin/source.properties
 echo "$VERSION" > ~/version
 
 # Do the thing!
-cd .. && wget -q "$APPIMAGETOOL" -O appimagetool && chmod +x ./appimagetool
+cd ..
+wget "$APPIMAGETOOL" -O appimagetool
+chmod +x ./appimagetool
 ./appimagetool --comp zstd \
-	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 ./"$APPDIR" || exit 1
-[ -n "$APP" ] && mv ./*.AppImage .. && cd .. && rm -rf "$APP" || exit 1
+	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 ./AppDir
 echo "All Done!"

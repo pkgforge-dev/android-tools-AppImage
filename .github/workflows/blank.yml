@@ -98,3 +98,21 @@ jobs:
             files: |
               *.AppImage*
           continue-on-error: false
+          
+  soar-nest:
+    needs: [release] #Only runs if release succeeded
+    permissions:
+      attestations: write #Needed for Build Provenance & Attestations
+      contents: write #Needed to create Release
+      id-token: write #Needed for Build Provenance & Attestations
+      packages: write #Needed to push to ghcr
+    uses: "pkgforge/soarpkgs/.github/workflows/matrix_builds.yaml@main"
+    with:
+      host: "x86_64-Linux" #Otherwise aarch64-Linux OR ALL for both
+      sbuild-url: "https://raw.githubusercontent.com/pkgforge/soarpkgs/refs/heads/main/packages/android-tools/appimage.pkgforge-dev.stable.yaml" #RAW URL to the SBUILD Recipe, can be hosted anywhere
+      ghcr-url: "ghcr.io/${{ github.repository }}/stable" #Package will be pushed under this path
+      pkg-family: "android-tools" #Needed to generate tags & artifact names
+      banner: true #If false, then Disables PkgForge Branding in LogFiles
+      debug: false #If set to true, will run everything with set -x
+      logs: true #Will Attach the entire Logs + File as Workflow Artifact
+      rebuild: true #Will rebuild even if ghcr tag already exists

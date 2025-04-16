@@ -43,12 +43,13 @@ CURRENTDIR="$(dirname "$(readlink -f "$0")")"
 UDEVNOTICE='No android udev rules detected, use "--getudev" to install'
 UDEVREPO="https://github.com/M0Rf30/android-udev-rules.git"
 cat /etc/udev/rules.d/*droid.rules >/dev/null 2>&1 && UDEVNOTICE=""
+cat /usr/lib/udev/rules.d/*droid.rules >/dev/null 2>&1 && UDEVNOTICE=""
 BIN="${ARGV0#./}"
 unset ARGV0
 export PATH="$CURRENTDIR/bin:$PATH"
 
 _get_udev_rules() {
-	if cat /etc/udev/rules.d/*droid.rules >/dev/null 2>&1; then
+	if cat /etc/udev/rules.d/*droid.rules >/dev/null 2>&1 || cat /usr/lib/udev/rules.d/*droid.rules >/dev/null 2>&1; then
 		echo "ERROR: udev rules are already installed!"
 		echo "Errors persisting with installed udev rules may be due to missing"
 		echo "udev rules for device or lack of permissions from device"

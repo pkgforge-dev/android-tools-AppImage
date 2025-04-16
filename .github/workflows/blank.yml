@@ -22,7 +22,7 @@ jobs:
         chmod a+x ./android-tools-appimage.sh
         ./android-tools-appimage.sh
         mkdir dist
-        mv *AppImage dist/
+        mv *AppImage* dist/
 
     - name: Check version file
       run: |
@@ -57,7 +57,7 @@ jobs:
         - name: Read version
           run: |
             cat version
-            export VERSION="$(<version)"
+            export VERSION="$(cat version)"
             echo "APP_VERSION=${VERSION}" >> "${GITHUB_ENV}"
     
         #Version Release

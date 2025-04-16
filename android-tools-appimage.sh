@@ -7,6 +7,7 @@ APP=android-tools-appimage
 SITE="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
 ICON="https://github.com/pkgforge-dev/android-tools-AppImage/blob/main/Android.png?raw=true"
 APPIMAGETOOL="https://github.com/pkgforge-dev/appimagetool-uruntime/releases/download/continuous/appimagetool-$ARCH.AppImage"
+UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|latest|*$ARCH.AppImage.zsync"
 LIB4BIN="https://raw.githubusercontent.com/VHSgunzo/sharun/refs/heads/main/lib4bin"
 
 # CREATE DIRECTORIES AND DOWNLOAD THE ARCHIVE
@@ -49,7 +50,8 @@ unset ARGV0
 export PATH="$CURRENTDIR/bin:$PATH"
 
 _get_udev_rules() {
-	if cat /etc/udev/rules.d/*droid.rules >/dev/null 2>&1 || cat /usr/lib/udev/rules.d/*droid.rules >/dev/null 2>&1; then
+	if cat /etc/udev/rules.d/*droid.rules >/dev/null 2>&1 \
+		|| cat /usr/lib/udev/rules.d/*droid.rules >/dev/null 2>&1; then
 		echo "ERROR: udev rules are already installed!"
 		echo "Errors persisting with installed udev rules may be due to missing"
 		echo "udev rules for device or lack of permissions from device"
@@ -143,6 +145,5 @@ echo "$VERSION" > ~/version
 cd ..
 wget "$APPIMAGETOOL" -O appimagetool
 chmod +x ./appimagetool
-./appimagetool --comp zstd \
-	--mksquashfs-opt -Xcompression-level --mksquashfs-opt 22 ./AppDir
+./appimagetool -n -u "$UPINFO" ./AppDir
 echo "All Done!"

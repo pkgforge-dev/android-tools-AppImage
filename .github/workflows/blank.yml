@@ -17,7 +17,6 @@ jobs:
     - name: build
       run: |
         sudo apt update
-        sudo apt install libfuse2 desktop-file-utils
         wget https://raw.githubusercontent.com/Samueru-sama/android-tools-AppImage/main/android-tools-appimage.sh
         chmod a+x ./android-tools-appimage.sh
         ./android-tools-appimage.sh

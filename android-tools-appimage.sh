@@ -24,9 +24,10 @@ cat >> ./android-tools.desktop << 'EOF'
 Name=Android-platform-tools
 Type=Application
 Icon=Android
-Exec="sh -ic ' android-tools "";"" \\$SHELL'"
+Exec=android-tools 
 Categories=Utility;
 Terminal=true
+Hidden=true
 EOF
 wget "$ICON" -O ./Android.png
 ln -s ./Android.png ./.DirIcon

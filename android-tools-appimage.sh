@@ -147,4 +147,21 @@ cd ..
 wget "$APPIMAGETOOL" -O appimagetool
 chmod +x ./appimagetool
 ./appimagetool -n -u "$UPINFO" ./AppDir
+
+UPINFO="$(echo "$UPINFO" | sed 's#.AppImage.zsync#*.AppBundle.zsync#g')"
+wget -O ./pelf "https://github.com/xplshn/pelf/releases/latest/download/pelf_$ARCH" 
+chmod +x ./pelf
+echo "Generating [dwfs]AppBundle..."
+./pelf \
+	--add-appdir ./AppDir                     \
+	--appimage-compat                         \
+	--disable-use-random-workdir              \
+	--add-updinfo "$UPINFO"                   \
+	--compression "-C zstd:level=22 -S26 -B8" \
+	--appbundle-id="android-tools#github.com/$GITHUB_REPOSITORY:$VERSION@$(date +%d_%m_%Y)" \
+	--output-to ./Android-platform-tools-"$VERSION"-"$ARCH".dwfs.AppBundle
+
+echo "Generating zsync file..."
+zsyncmake ./*.AppBundle -u ./*.AppBundle
+
 echo "All Done!"

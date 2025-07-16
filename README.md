@@ -1,4 +1,12 @@
-# android-tools-AppImage
+# android-tools-AppImage 🐧
+
+[![GitHub Downloads](https://img.shields.io/github/downloads/pkgforge-dev/android-tools-AppImage/total?logo=github&label=GitHub%20Downloads)](https://github.com/pkgforge-dev/android-tools-AppImage/releases/latest)
+[![CI Build Status](https://github.com//pkgforge-dev/android-tools-AppImage/actions/workflows/blank.yml/badge.svg)](https://github.com/pkgforge-dev/android-tools-AppImage/releases/latest)
+
+* [Latest Stable Release](https://github.com/pkgforge-dev/android-tools-AppImage/releases/latest)
+
+---
+
 Unofficial AppImage of Android Platform Tools (adb, fastboot, etc), uses the official [binaries](https://developer.android.com/tools/releases/platform-tools) and turns them into an AppImage.
 
 **This AppImage bundles everything and should work on any linux distro, even on musl based ones.**

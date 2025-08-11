@@ -51,7 +51,7 @@ echo "Generating [dwfs]AppBundle..."
 	--add-updinfo "$UPINFO"                   \
 	--compression "-C zstd:level=22 -S26 -B8" \
 	--appbundle-id="android-tools#github.com/$GITHUB_REPOSITORY:$VERSION@$(date +%d_%m_%Y)" \
-	--output-to ./Android_Tools-"$VERSION"-"$ARCH".dwfs.AppBundle
+	--output-to ./Android_Tools-"$VERSION"-anylinux-"$ARCH".dwfs.AppBundle
 
 echo "Generating zsync file..."
 zsyncmake ./*.AppBundle -u ./*.AppBundle

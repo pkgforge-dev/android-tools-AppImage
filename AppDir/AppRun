@@ -21,9 +21,10 @@ _get_symlinks() {
 	esac
 	mkdir -p "$BINDIR"
 	for link do
-		if [ ! -x "$link" ] || [ ! -f "$link" ]; then
-			continue
-		fi
+		case "$link" in
+			*xdg-open|*.hook|lib*) continue;;
+			*)   [ -x "$link" ] || continue;;
+		esac
 		link="${link##*/}"
 		ln -s "$APPIMAGE" "$BINDIR"/"$link" 2>/dev/null \
 		  && echo "'$link' successfully created in '$BINDIR'"

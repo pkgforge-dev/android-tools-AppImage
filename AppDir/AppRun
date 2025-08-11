@@ -42,7 +42,7 @@ for hook in "$CURRENTDIR"/bin/*.hook; do
 done
 
 if [ "$1" = '--getlinks' ]; then
-	_getlinks
+	_get_symlinks
 fi
 
 # Check if ARGV0 matches any bundled binary, fallback to $1, then main bin

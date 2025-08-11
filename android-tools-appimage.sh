@@ -23,7 +23,7 @@ cp -v  ./platform-tools/mke2fs.conf ./AppDir/bin
 mv -v  ./platform-tools/*           ./AppDir/shared/bin
 
 VERSION="$(awk -F"=" '/Revision/{print $2; exit}' ./AppDir/shared/bin/source.properties)"
-[ -n "$VERSION" ] && "$VERSION" > ~/version
+[ -n "$VERSION" ] && echo "$VERSION" > ~/version
 export OUTNAME=Android_Tools-"$VERSION"-anylinux-"$ARCH".AppImage
 
 # add udev rules

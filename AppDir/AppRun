@@ -1,0 +1,60 @@
+#!/bin/sh
+
+set -e
+
+CURRENTDIR="$(cd "${0%/*}" && echo "$PWD")"
+BINDIR="${XDG_BIN_HOME:-$HOME/.local/bin}"
+BIN="${ARGV0:-$0}"
+BIN="${BIN##*/}"
+unset ARGV0
+
+_get_symlinks() {
+	set -- "$CURRENTDIR"/bin/*
+	echo ""
+	echo "This function will make wrapper symlinks in $BINDIR"
+	echo "that will point to ${APPIMAGE##*/}, this way when you run that"
+	echo "symlink it automatically runs that binary without extra arguments"
+	echo ""
+	printf '%s' "Proceed with the symlink creation? (Y/n): "; read -r yn
+	case "$yn" in
+		n*|N*) >&2 echo "Aborting..."; exit 1;;
+	esac
+	mkdir -p "$BINDIR"
+	for link do
+		case "$link" in
+			*xdg-open|*.hook|*.conf) continue;;
+		esac
+		link="${link##*/}"
+		ln -s "$APPIMAGE" "$BINDIR"/"$link" 2>/dev/null \
+		  && echo "'$link' successfully created in '$BINDIR'"
+	done
+	exit 0
+}
+
+# additional scripts can be placed in the top level bin dir
+# those with a name that ends up .hook will be executed in teh current shell
+# while those that end with bg.hook will be executed in the background
+for hook in "$CURRENTDIR"/bin/*.hook; do
+	[ -x "$hook" ] || continue
+	case "$hook" in
+		*.bg.hook) "$hook" &;;
+		*.hook)    "$hook"  ;;
+	esac
+done
+
+if [ "$1" = '--getlinks' ]; then
+	_get_symlinks
+fi
+
+# Check if ARGV0 matches any bundled binary, fallback to $1, then main bin
+if [ -f "$CURRENTDIR"/bin/"$BIN" ]; then
+	exec "$CURRENTDIR"/bin/"$BIN" "$@"
+elif [ -f "$CURRENTDIR"/bin/"$1" ]; then
+	BIN="$1"
+	shift
+	exec "$CURRENTDIR"/bin/"$BIN" "$@"
+else
+	>&2 echo "Using default binary adb..."
+	>&2 echo "Run ${APPIMAGE##*/} --getlinks for more info"
+	exec "$CURRENTDIR"/bin/adb "$@"
+fi

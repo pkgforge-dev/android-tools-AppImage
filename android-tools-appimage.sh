@@ -27,7 +27,7 @@ VERSION="$(awk -F"=" '/Revision/{print $2; exit}' ./AppDir/shared/bin/source.pro
 export OUTNAME=Android_Tools-"$VERSION"-anylinux-"$ARCH".AppImage
 
 # add udev rules
-wget --retry-connrefused --tries=30 "$UDEV" -O ./AppDir/etc/udev/rules.d
+wget --retry-connrefused --tries=30 "$UDEV" -O ./AppDir/etc/udev/rules.d/51-android.rules
 
 # DEPLOY ALL LIBS
 wget --retry-connrefused --tries=30 "$SHARUN" -O ./quick-sharun

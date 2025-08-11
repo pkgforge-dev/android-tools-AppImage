@@ -12,8 +12,8 @@ _get_symlinks() {
 	set -- "$CURRENTDIR"/bin/*
 	echo ""
 	echo "This function will make wrapper symlinks in $BINDIR"
-	echo "that will point to $APPIMAGE, this way when you run that symlink"
-	echo "it automatically launches that binary without extra arguments"
+	echo "that will point to ${APPIMAGE##*/}, this way when you run that"
+	echo "symlink it automatically runs that binary without extra arguments"
 	echo ""
 	printf '%s' "Proceed with the symlink creation? (Y/n): "; read -r yn
 	case "$yn" in

@@ -18,9 +18,9 @@ mkdir -p ./AppDir/shared/bin ./AppDir/bin ./AppDir/etc/udev/rules.d
 wget "$BINARY" -O ./bin.zip
 unzip -q ./bin.zip
 rm -f ./bin.zip
-cp -v ./platform-tools/lib64       ./AppDir/bin
-cp -v ./platform-tools/mke2fs.conf ./AppDir/bin
-mv -v ./platform-tools/*           ./AppDir/shared/bin
+cp -vr ./platform-tools/lib64       ./AppDir/bin
+cp -v  ./platform-tools/mke2fs.conf ./AppDir/bin
+mv -v  ./platform-tools/*           ./AppDir/shared/bin
 
 VERSION="$(awk -F"=" '/Revision/{print $2; exit}' ./AppDir/shared/bin/source.properties)"
 [ -n "$VERSION" ] && "$VERSION" > ~/version

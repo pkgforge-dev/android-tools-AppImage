@@ -1,9 +1,8 @@
 [Desktop Entry]
 Name=Android-platform-tools
 Type=Application
-Icon=Android
+Icon=android-tools
 Exec=android-tools
 Categories=Utility;
 Terminal=true
 Hidden=true
-

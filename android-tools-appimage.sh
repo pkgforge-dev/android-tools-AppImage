@@ -33,7 +33,7 @@ chmod +x ./quick-sharun
 ./quick-sharun ./AppDir/shared/bin/*
 
 # We also need to be added to a group after installing udev rules
-sed -i '/cp -v/a	 usermod -a -G adbusers $(logname)' ./AppDir/bin/udev-installer.hook
+sed -i '/cp -v/a	 groupadd -f adbusers; usermod -a -G adbusers $(logname)' ./AppDir/bin/udev-installer.hook
 
 # MAKE APPIMAGE WITH URUNTIME
 wget --retry-connrefused --tries=30 "$URUNTIME" -O ./uruntime2appimage

@@ -22,13 +22,13 @@ _get_symlinks() {
 	mkdir -p "$BINDIR"
 	for link do
 		case "$link" in
-			*xdg-open|*.hook|lib*) continue;;
-			*)   [ -x "$link" ] || continue;;
+			*xdg-open|*.hook|*.conf) continue;;
 		esac
 		link="${link##*/}"
 		ln -s "$APPIMAGE" "$BINDIR"/"$link" 2>/dev/null \
 		  && echo "'$link' successfully created in '$BINDIR'"
 	done
+	exit 0
 }
 
 # additional scripts can be placed in the top level bin dir

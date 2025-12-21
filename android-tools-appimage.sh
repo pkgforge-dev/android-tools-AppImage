@@ -11,6 +11,7 @@ UDEV="https://raw.githubusercontent.com/M0Rf30/android-udev-rules/refs/heads/mai
 export ADD_HOOKS="udev-installer.hook"
 export UPINFO="gh-releases-zsync|${GITHUB_REPOSITORY%/*}|${GITHUB_REPOSITORY#*/}|latest|*$ARCH.AppImage.zsync"
 export URUNTIME_PRELOAD=1 # really needed here
+export MAIN_BIN=adb
 
 # CREATE DIRECTORIES AND DOWNLOAD THE ARCHIVE
 mkdir -p ./AppDir/shared/bin ./AppDir/bin ./AppDir/etc/udev/rules.d

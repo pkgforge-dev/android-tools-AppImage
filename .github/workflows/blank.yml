@@ -17,8 +17,7 @@ jobs:
     - name: build
       run: |
         sudo apt update
-        wget https://raw.githubusercontent.com/Samueru-sama/android-tools-AppImage/main/android-tools-appimage.sh
-        chmod a+x ./android-tools-appimage.sh
+        chmod +x ./android-tools-appimage.sh
         ./android-tools-appimage.sh
         mkdir dist
         mv *AppImage* dist/

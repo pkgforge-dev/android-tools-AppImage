@@ -18,7 +18,7 @@ get-debloated-pkgs --add-common --prefer-nano ! mesa ! vulkan
 BINARY_SOURCE="https://dl.google.com/android/repository/platform-tools-latest-linux.zip"
 
 mkdir -p ./AppDir/bin ./AppDir/etc/udev/rules.d
-wget --retry-connrefused --tries=30 "$BINARY_SOURCE=" -O ./bin.zip
+wget --retry-connrefused --tries=30 "$BINARY_SOURCE" -O ./bin.zip
 unzip ./bin.zip
 rm -f ./bin.zip
 mv -v  ./platform-tools/* ./AppDir//bin

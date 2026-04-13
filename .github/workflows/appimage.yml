@@ -18,9 +18,9 @@ jobs:
             name: Build AppImage
             arch: x86_64
           # comment out these 3 lines if aarch64 is not wanted
-          - runs-on: ubuntu-24.04-arm
-            name: Build AppImage
-            arch: aarch64
+#          - runs-on: ubuntu-24.04-arm
+#            name: Build AppImage
+#            arch: aarch64
     container: ghcr.io/pkgforge-dev/archlinux:latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

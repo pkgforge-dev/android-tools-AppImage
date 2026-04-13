@@ -1,0 +1,25 @@
+#!/bin/sh
+
+_make_symlinks_in_path() {
+	[ -n "$APPIMAGE" ] || return 1
+	[ -n "$APPDIR" ] || return 1
+	mkdir -p "$BINDIR"
+	cd "$APPDIR"/bin
+	set +e
+	set -- ./*
+	for b do case "$b" in
+		*xdg-open|*.hook|*.conf)
+			continue
+			;;
+		*)
+			b=${b##*/}
+			ln -sv "$APPIMAGE" "$BINDIR"/"$link" 2>/dev/null
+			;;
+		esac
+	done
+	exit 0
+}
+
+if [ "$1" = '--make-symlinks' ]; then
+	_make_symlinks_in_path
+fi

@@ -8,12 +8,12 @@ _make_symlinks_in_path() {
 	set +e
 	set -- ./*
 	for b do case "$b" in
-		*xdg-open|*.hook|*.conf)
+		*xdg-open|*.hook|*.conf|*txt|*lib64)
 			continue
 			;;
 		*)
 			b=${b##*/}
-			ln -sv "$APPIMAGE" "$BINDIR"/"$link" 2>/dev/null
+			ln -sv "$APPIMAGE" "$BINDIR"/"$b" 2>/dev/null
 			;;
 		esac
 	done

@@ -17,7 +17,7 @@ quick-sharun ./AppDir/bin/*
 # add udev rules
 UDEV_RULES="https://raw.githubusercontent.com/M0Rf30/android-udev-rules/refs/heads/main/51-android.rules"
 wget --retry-connrefused --tries=30 "$UDEV_RULES" -O ./AppDir/etc/udev/rules.d/51-android.rules
-sed -i '/cp -v/a	 groupadd -f adbusers; usermod -a -G adbusers $(logname)' ./AppDir/bin/udev-installer.hook
+sed -i "/cp -v '\$_tmp_udev_dir'/a	 groupadd -f adbusers; usermod -a -G adbusers \$(logname)" ./AppDir/bin/udev-installer.hook
 
 # Turn AppDir into AppImage
 quick-sharun --make-appimage
